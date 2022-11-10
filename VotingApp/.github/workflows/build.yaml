@@ -1,0 +1,14 @@
+name: 'Build App'
+
+on: [push, pull_request]
+
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.0.100'
+      - run: dotnet build 
+          working-directory: VotingApp
