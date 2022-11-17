@@ -1,7 +1,8 @@
-import ApiAuthorzationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
-import { Counter } from "./components/Counter";
-import { FetchData } from "./components/FetchData";
+import { LoginPage } from "./components/LoginPage/LoginPage";
 import { Home } from "./components/Home";
+import { RegistrationPage } from "./components/RegistrationPage/RegistrationPage";
+import { VotingMenu } from "./components/VotingMenu/VotingMenu";
+import { VoteBallot } from "./components/VoteBallot/VoteBallot";
 
 const AppRoutes = [
   {
@@ -9,15 +10,21 @@ const AppRoutes = [
     element: <Home />
   },
   {
-    path: '/counter',
-    element: <Counter />
+    path: '/login',
+    element: <LoginPage />
   },
   {
-    path: '/fetch-data',
-    requireAuth: true,
-    element: <FetchData />
+    path: '/register',
+    element: <RegistrationPage />
   },
-  ...ApiAuthorzationRoutes
+  {
+    path: '/votingmenu',
+    element: <VotingMenu />
+  },
+  {
+    path: '/voteballot',
+    element: <VoteBallot />
+  }
 ];
 
 export default AppRoutes;
