@@ -1,7 +1,7 @@
 import "./VoteBallot.scss";
 
 import React, { Component } from "react";
-import Container from 'react-bootstrap/Container'
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
