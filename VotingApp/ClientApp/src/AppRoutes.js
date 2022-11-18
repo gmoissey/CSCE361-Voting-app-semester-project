@@ -5,6 +5,7 @@ import { VotingMenu } from "./components/VotingMenu/VotingMenu";
 import { VoteBallot } from "./components/VoteBallot/VoteBallot";
 import { SuccesfulVote } from "./components/SuccesfulVote/SuccesfulVote";
 import { ElectionResults } from "./components/ElectionResults/ElectionResults";
+import { VoterSummary } from "./components/VoterSummary/VoterSummary";
 
 const AppRoutes = [
   {
@@ -34,6 +35,10 @@ const AppRoutes = [
   {
     path: '/electionresutls',
     element: <ElectionResults />
+  },
+  {
+    path: '/votersummary',
+    element: <VoterSummary />
   }
 ];
 

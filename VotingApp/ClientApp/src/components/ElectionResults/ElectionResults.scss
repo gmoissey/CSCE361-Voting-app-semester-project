@@ -7,3 +7,11 @@
     text-align: right;
     display: inline;
 }
+
+.candidate-label-badge {
+    margin: 0 20px 0 20px;
+
+    .badge-icon {
+        margin-right: 5px;
+    }
+}
