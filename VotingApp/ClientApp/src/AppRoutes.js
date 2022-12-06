@@ -1,7 +1,11 @@
-import ApiAuthorzationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
-import { Counter } from "./components/Counter";
-import { FetchData } from "./components/FetchData";
+import { LoginPage } from "./components/LoginPage/LoginPage";
 import { Home } from "./components/Home";
+import { RegistrationPage } from "./components/RegistrationPage/RegistrationPage";
+import { VotingMenu } from "./components/VotingMenu/VotingMenu";
+import { VoteBallot } from "./components/VoteBallot/VoteBallot";
+import { SuccesfulVote } from "./components/SuccesfulVote/SuccesfulVote";
+import { ElectionResults } from "./components/ElectionResults/ElectionResults";
+import { VoterSummary } from "./components/VoterSummary/VoterSummary";
 
 const AppRoutes = [
   {
@@ -9,15 +13,33 @@ const AppRoutes = [
     element: <Home />
   },
   {
-    path: '/counter',
-    element: <Counter />
+    path: '/login',
+    element: <LoginPage />
   },
   {
-    path: '/fetch-data',
-    requireAuth: true,
-    element: <FetchData />
+    path: '/register',
+    element: <RegistrationPage />
   },
-  ...ApiAuthorzationRoutes
+  {
+    path: '/votingmenu',
+    element: <VotingMenu />
+  },
+  {
+    path: '/voteballot',
+    element: <VoteBallot />
+  },
+  {
+    path: '/succesfulvote',
+    element: <SuccesfulVote />
+  },
+  {
+    path: '/electionresutls',
+    element: <ElectionResults />
+  },
+  {
+    path: '/votersummary',
+    element: <VoterSummary />
+  }
 ];
 
 export default AppRoutes;
