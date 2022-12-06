@@ -17,16 +17,16 @@ export class RegistrationPage extends Component {
                 <Card.Body>
                     <Card.Text>
                         <h2>
-                            Registrations
+                            Registration
                         </h2>
                         <Form>
                             <Row className="mb-3">
-                                <Form.Group as={Col} controlId="formGridEmail">
+                                <Form.Group as={Col} controlId="formGridFirstName">
                                 <Form.Label>Firt Name</Form.Label>
                                 <Form.Control type="text" placeholder="first name" />
                                 </Form.Group>
 
-                                <Form.Group as={Col} controlId="formGridPassword">
+                                <Form.Group as={Col} controlId="formGridLastName">
                                 <Form.Label>Last Name</Form.Label>
                                 <Form.Control type="text" placeholder="last name" />
                                 </Form.Group>
@@ -63,7 +63,12 @@ export class RegistrationPage extends Component {
                             </Row>
 
                             <Row className="mb-3">
-                                <Form.Group as={Col} controlId="formGridEmail">
+                                <Form.Group as={Col} controlId="formGridVoterId">
+                                <Form.Label>DOB</Form.Label>
+                                <Form.Control type="date" placeholder="" />
+                                </Form.Group>
+
+                                <Form.Group as={Col} controlId="formGridVoterId">
                                 <Form.Label>Voter ID</Form.Label>
                                 <Form.Control type="id" placeholder="voter ID" />
                                 </Form.Group>
