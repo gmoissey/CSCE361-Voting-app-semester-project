@@ -12,7 +12,7 @@ using VotingApp.Data;
 namespace VotingApp.Migrations
 {
     [DbContext(typeof(VotingAppDbContext))]
-    [Migration("20221207023642_InitialCreate")]
+    [Migration("20221208230342_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -69,6 +69,13 @@ namespace VotingApp.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Party")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
