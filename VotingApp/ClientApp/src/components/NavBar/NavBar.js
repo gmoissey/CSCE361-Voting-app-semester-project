@@ -6,13 +6,12 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 
 export class NavBar extends Component {
-    state = {  };
     
     render() { 
         return (
             <Navbar className="navbar-light navbar-expand-md py-3 shadow-sm">
             <Container>
-                <a className="navbar-brand d-flex align-items-center" href="#">
+                <a className="navbar-brand d-flex align-items-center" href="/">
                     <span className="d-flex justify-content-center align-items-center bs-icon-sm bs-icon-rounded bs-icon-primary me-2 bs-icon">
                         <svg
                         className="bi bi-arrow-up-right-square"
@@ -41,12 +40,12 @@ export class NavBar extends Component {
                 <div id="navcol-2" className="collapse navbar-collapse">
                 <ul className="navbar-nav ms-auto">
                     <li className="nav-item">
-                    <a className="nav-link active" href="#">
+                    <a className="nav-link active" href="/register">
                         Register
                     </a>
                     </li>
                 </ul>
-                <a className="btn btn-primary ms-md-2" role="button" href="#">
+                <a className="btn btn-primary ms-md-2" role="button" href="/login">
                     Login
                 </a>
                 </div>
