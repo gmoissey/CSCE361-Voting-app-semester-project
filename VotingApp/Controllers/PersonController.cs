@@ -130,24 +130,24 @@ namespace VotingApp.Controllers
             return NoContent();
         }
 
-        [HttpGet("authenticate")]
-        public async Task<ActionResult<Boolean>> AuthenticatePerson(Person personToCheck)
+        [HttpPost("authenticate")]
+        public async Task<ActionResult<Person>> AuthenticatePerson(Person personToCheck)
         {
             if (_context.Person == null)
             {
                 return NotFound();
             }
             if(personToCheck.PasswordHash == null) {
-                return false;
+                return Conflict("Password is null");
             }
             var person = await _context.Person.FindAsync(personToCheck.Username);
 
             if (person != null && String.Equals(personToCheck.PasswordHash, person.PasswordHash))
             {
-                return true;
+                return personToCheck;
             }
 
-            return false;
+            return Conflict("Wrong username or password");
             
         }
 
