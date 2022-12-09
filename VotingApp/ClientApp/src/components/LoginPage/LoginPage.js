@@ -7,7 +7,6 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 
 export class LoginPage extends Component {
-    state = {  } 
     render() { 
         return (
             <Container className="page-container d-flex justify-content-center align-items-center">

@@ -1,6 +1,9 @@
 import "./RegistrationPage.scss";
 
 import React, { Component } from "react";
+
+import { Navigate } from "react-router-dom";
+
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -9,8 +12,9 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Alert from 'react-bootstrap/Alert';
 import VoterAPI from "../../API/VoterAPI";
+import Spinner from 'react-bootstrap/Spinner';
 
-export class RegistrationPage extends Component {
+class RegistrationPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +25,9 @@ export class RegistrationPage extends Component {
                 PasswordHash: '',
                 DOB: ''
             },
-            errors: []
+            errors: [],
+            loading: false,
+            isAuthenticated: false
         };
         this.handleSubmit = this.handleRegisterSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
@@ -35,8 +41,18 @@ export class RegistrationPage extends Component {
             this.setState({errors: ['You must be 18 years old to register.']});
             return;
         }
-
-        VoterAPI.registerPerson(this.state.person);
+        
+        this.setState({loading: true});
+        VoterAPI.registerPerson(this.state.person).then((response) => {
+            this.setState({isAuthenticated: true});
+            sessionStorage.setItem('authenticated', true);
+            sessionStorage.setItem('username', this.state.person.Username);
+            this.render();
+        }).catch((error) => {
+            this.setState({errors: ["An error occurred while registering."]});
+        }).finally(() => {
+            this.setState({loading: false});
+        });
     }
 
     handleFormChange(event) {
@@ -62,6 +78,9 @@ export class RegistrationPage extends Component {
     }
 
     render() { 
+        if(this.state.isAuthenticated) {  
+            return <Navigate to="/" />
+        }
         return (
             <Container className="page-container d-flex justify-content-center align-items-center">
             <Card className="main-card">
@@ -70,7 +89,8 @@ export class RegistrationPage extends Component {
                         <h2>
                             Registration
                         </h2>
-                        <Form onSubmit={this.handleSubmit}>
+                        <Spinner animation="border" variant="primary" className={this.state.loading ? null : "dontDisplay"}/>
+                        <Form onSubmit={this.handleSubmit} className={this.state.loading ? "dontDisplay" : null}>
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridFirstName">
                                 <Form.Label>Firt Name</Form.Label>
@@ -123,3 +143,5 @@ export class RegistrationPage extends Component {
         );
     }
 }
+
+export default RegistrationPage;

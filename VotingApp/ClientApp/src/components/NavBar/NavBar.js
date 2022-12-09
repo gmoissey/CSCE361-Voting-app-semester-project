@@ -6,7 +6,12 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 
 export class NavBar extends Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = { 
+            isAuthenticated: sessionStorage.getItem('authenticated') === 'true'
+         };
+    }
     render() { 
         return (
             <Navbar className="navbar-light navbar-expand-md py-3 shadow-sm">
@@ -38,16 +43,27 @@ export class NavBar extends Component {
                     <span className="navbar-toggler-icon" />
                 </button>
                 <div id="navcol-2" className="collapse navbar-collapse">
-                <ul className="navbar-nav ms-auto">
-                    <li className="nav-item">
-                    <a className="nav-link active" href="/register">
-                        Register
-                    </a>
-                    </li>
-                </ul>
-                <a className="btn btn-primary ms-md-2" role="button" href="/login">
-                    Login
-                </a>
+                    {
+                        this.state.isAuthenticated ? 
+                        <ul className="navbar-nav ms-auto">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/logout">Logout</a>
+                            </li>
+                        </ul>
+                        :
+                        <ul className="navbar-nav ms-auto">
+                            <li className="nav-item">
+                            <a className="nav-link active" href="/register">
+                                Register
+                            </a>
+                            </li>
+                        
+                            <a className="btn btn-primary ms-md-2" role="button" href="/login">
+                                Login
+                            </a>
+                        </ul>
+
+                    }
                 </div>
             </Container>
             </Navbar>

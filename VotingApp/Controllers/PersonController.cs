@@ -98,8 +98,8 @@ namespace VotingApp.Controllers
             catch (DbUpdateException)
             {
                 if (PersonExists(person.Username))
-                {
-                    return Conflict();
+                {   
+                    return Conflict("Person already exists");
                 }
                 else
                 {
