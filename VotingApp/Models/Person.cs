@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Security.Cryptography;
+using System.Text.Json.Serialization;
 
 namespace VotingApp.Models;
 
@@ -13,6 +14,7 @@ public class Person
     private string? _passwordHash;
 
     [Required]
+    [JsonIgnore]
     public string PasswordHash
     {
         get

@@ -25,11 +25,19 @@ namespace VotingApp.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Election>>> GetElection()
         {
-          if (_context.Election == null)
-          {
-              return NotFound();
-          }
-            return await _context.Election.ToListAsync();
+            if (_context.Election == null)
+            {
+                return NotFound();
+            }
+            List<Election> elections = await _context.Election.ToListAsync();
+
+            for(int i = 0; i < elections.Count; i++)
+            {
+                elections[i].Candidate1 = await _context.Person.FindAsync(elections[i].Candidate1Username);
+                elections[i].Candidate2 = await _context.Person.FindAsync(elections[i].Candidate2Username);
+            }
+
+            return elections;
         }
 
         // GET: api/Election/5

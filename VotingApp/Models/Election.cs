@@ -11,7 +11,8 @@ public class Election
     public virtual Person? Candidate1 {get; set; }
     [ForeignKey("Person")] 
     public string? Candidate2Username { get; set; }
-
     public virtual Person? Candidate2 {get; set; }
     public string? Title { get; set; }
+
+    public DateTime? EndDate { get; set; }
 }

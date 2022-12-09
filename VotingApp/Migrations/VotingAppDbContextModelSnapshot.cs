@@ -36,6 +36,9 @@ namespace VotingApp.Migrations
                     b.Property<string>("Candidate2Username")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -57,11 +60,9 @@ namespace VotingApp.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Party")

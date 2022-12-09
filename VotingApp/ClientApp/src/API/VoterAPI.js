@@ -2,7 +2,7 @@ const baseUrl = 'https://localhost:7248/api/';
 
 export default class VoterAPI {
 
-    // Use this function to validate the user's login state
+    // Use this function to validate user's login state
     // before every authenticated API call
     static validateLoginState() {
         if(sessionStorage.getItem('authenticated') === 'true' && sessionStorage.getItem('username') !== '') {
@@ -38,6 +38,21 @@ export default class VoterAPI {
         };
 
         return fetch(`${baseUrl}Person/authenticate`, params)
+            .then(response => response.json())
+            .catch(error => {
+                throw error;
+            });
+    }
+
+    static getElections()  {
+        let params = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        return fetch(`${baseUrl}Election`, params)
             .then(response => response.json())
             .catch(error => {
                 throw error;
