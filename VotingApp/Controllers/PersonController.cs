@@ -133,7 +133,6 @@ namespace VotingApp.Controllers
         [HttpGet("authenticate")]
         public async Task<ActionResult<Boolean>> AuthenticatePerson(Person personToCheck)
         {
-            Console.WriteLine("Hello World!");
             if (_context.Person == null)
             {
                 return NotFound();
@@ -145,7 +144,6 @@ namespace VotingApp.Controllers
 
             if (person != null && String.Equals(personToCheck.PasswordHash, person.PasswordHash))
             {
-                Console.WriteLine("Hello World!");
                 return true;
             }
 
