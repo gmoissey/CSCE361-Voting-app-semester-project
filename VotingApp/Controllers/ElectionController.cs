@@ -47,9 +47,9 @@ namespace VotingApp.Controllers
                 return NotFound();
             }
 
-            election.Candidate1 = await _context.Person.FindAsync(election.Candidate1ID);
-            election.Candidate2 = await _context.Person.FindAsync(election.Candidate2ID);
-
+            election.Candidate1 = await _context.Person.FindAsync(election.Candidate1Username);
+            election.Candidate2 = await _context.Person.FindAsync(election.Candidate2Username);
+            
             return election;
         }
 

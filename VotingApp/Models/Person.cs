@@ -7,19 +7,17 @@ namespace VotingApp.Models;
 public class Person
 {
     [Key]
-    public int ID { get; set; }
-
     [Required]
     public string? Username { get; set; }
 
-    private string _passwordHash;
+    private string? _passwordHash;
 
     [Required]
     public string PasswordHash
     {
         get
         {
-            return this._passwordHash;
+            return _passwordHash;
         }
 
         set
@@ -28,23 +26,13 @@ public class Person
         }
     }
 
-    [Required]
     public string? FirstName { get; set; }
 
-    [Required]
     public string? LastName { get; set; }
 
     public string? Party { get; set; }
 
-    [Required]
     public int Age { get; set; }
-
-    public Boolean comparePassword(string recievedPassword)
-    {
-        string recievedPasswordHash = this.ComputeSha256Hash(recievedPassword);
-
-        return String.Equals(this.PasswordHash, recievedPasswordHash);
-    }
 
     private string ComputeSha256Hash(string rawData)
     {

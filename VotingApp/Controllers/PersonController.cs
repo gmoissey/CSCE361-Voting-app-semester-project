@@ -34,7 +34,7 @@ namespace VotingApp.Controllers
 
         // GET: api/Person/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Person>> GetPerson(int id)
+        public async Task<ActionResult<Person>> GetPerson(string id)
         {
           if (_context.Person == null)
           {
@@ -53,9 +53,9 @@ namespace VotingApp.Controllers
         // PUT: api/Person/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPerson(int id, Person person)
+        public async Task<IActionResult> PutPerson(string id, Person person)
         {
-            if (id != person.ID)
+            if (id != person.Username)
             {
                 return BadRequest();
             }
@@ -91,14 +91,28 @@ namespace VotingApp.Controllers
               return Problem("Entity set 'VotingAppDbContext.Person'  is null.");
           }
             _context.Person.Add(person);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (PersonExists(person.Username))
+                {
+                    return Conflict();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-            return CreatedAtAction("GetPerson", new { id = person.ID }, person);
+            return CreatedAtAction("GetPerson", new { id = person.Username }, person);
         }
 
         // DELETE: api/Person/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePerson(int id)
+        public async Task<IActionResult> DeletePerson(string id)
         {
             if (_context.Person == null)
             {
@@ -116,9 +130,33 @@ namespace VotingApp.Controllers
             return NoContent();
         }
 
-        private bool PersonExists(int id)
+        [HttpGet("authenticate")]
+        public async Task<ActionResult<Boolean>> AuthenticatePerson(Person personToCheck)
         {
-            return (_context.Person?.Any(e => e.ID == id)).GetValueOrDefault();
+            Console.WriteLine("Hello World!");
+            if (_context.Person == null)
+            {
+                return NotFound();
+            }
+            if(personToCheck.PasswordHash == null) {
+                return false;
+            }
+            var person = await _context.Person.FindAsync(personToCheck.Username);
+
+            if (person != null && String.Equals(personToCheck.PasswordHash, person.PasswordHash))
+            {
+                Console.WriteLine("Hello World!");
+                return true;
+            }
+
+            return false;
+            
+        }
+
+        private bool PersonExists(string? id)
+        {   
+            if(id == null) return false;
+            return (_context.Person?.Any(e => e.Username == id)).GetValueOrDefault();
         }
     }
 }
