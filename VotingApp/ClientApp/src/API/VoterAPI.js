@@ -45,6 +45,7 @@ export default class VoterAPI {
     }
 
     static getElections()  {
+        if(this.validateLoginState() === false) return Promise.reject('Not authenticated');
         let params = {
             method: 'GET',
             headers: {

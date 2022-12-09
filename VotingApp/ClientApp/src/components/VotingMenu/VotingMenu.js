@@ -3,9 +3,31 @@ import "./VotingMenu.scss";
 import React, { Component } from "react";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
+import VoterAPI from '../../API/VoterAPI';
 
 export class VotingMenu extends Component {
-    state = {  } 
+    constructor(props) {
+        super(props);
+        this.state = {
+            elections: []
+        };
+
+        this.loadElections = this.loadElections.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadElections();
+    }
+
+    loadElections() {
+        VoterAPI.getElections().then((response) => {
+            this.setState({elections: response});
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    
     render() { 
         return (
             <Container>
@@ -17,23 +39,27 @@ export class VotingMenu extends Component {
                         <tr>
                         <th>#</th>
                         <th>Election Title</th>
-                        <th>Start Data</th>
-                        <th>End Data</th>
+                        <th>Candidate 1</th>
+                        <th>Candidate 2</th>
+                        <th>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>1</td>
-                        <td>2022 Mayor Election</td>
-                        <td>May 24</td>
-                        <td>May 25</td>
-                        </tr>
-                        <tr>
-                        <td>2</td>
-                        <td>2022 Board Election</td>
-                        <td>August 28</td>
-                        <td>August 29</td>
-                        </tr>
+                        {
+                            this.state.elections.map((election, index) => {
+                                if(new Date(election.endDate) > new Date()) return;
+                                return (
+                                    <tr>
+                                        <td>{election.id}</td>
+                                        <td>{election.title}</td>
+                                        <td>{election.candidate1["firstName"] + " " + election.candidate1["lastName"]}</td>
+                                        <td>{election.candidate2["firstName"] + " " + election.candidate2["lastName"]}</td>
+                                        <td>{election.endDate}</td>
+                                    </tr>
+                                );
+                            }
+                        )
+                        }
                     </tbody>
                 </Table>
 
@@ -45,23 +71,27 @@ export class VotingMenu extends Component {
                         <tr>
                         <th>#</th>
                         <th>Election Title</th>
-                        <th>Start Data</th>
-                        <th>End Data</th>
+                        <th>Candidate 1</th>
+                        <th>Candidate 2</th>
+                        <th>End Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>1</td>
-                        <td>2022 Mayor Election</td>
-                        <td>May 24</td>
-                        <td>May 25</td>
-                        </tr>
-                        <tr>
-                        <td>2</td>
-                        <td>2022 Board Election</td>
-                        <td>August 28</td>
-                        <td>August 29</td>
-                        </tr>
+                        {
+                            this.state.elections.map((election, index) => {
+                                if(new Date(election.endDate) <= new Date()) return;
+                                return (
+                                    <tr>
+                                        <td>{election.id}</td>
+                                        <td>{election.title}</td>
+                                        <td>{election.candidate1["firstName"] + " " + election.candidate1["lastName"]}</td>
+                                        <td>{election.candidate2["firstName"] + " " + election.candidate2["lastName"]}</td>
+                                        <td>{election.endDate}</td>
+                                    </tr>
+                                );
+                            }
+                        )
+                        }
                     </tbody>
                 </Table>
 
