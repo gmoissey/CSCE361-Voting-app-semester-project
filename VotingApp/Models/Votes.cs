@@ -11,7 +11,7 @@ public class Votes
 	public int? ElectionId { get; set; }
 	public virtual Election? Election { get; set; }
 	[ForeignKey("Person")]
-	public int? VoterID { get; set; }
+	public string? VoterUsername { get; set; }
 	public virtual Person? Voter { get; set; }
 	
     public int Vote { get; set; }

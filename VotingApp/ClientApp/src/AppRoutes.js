@@ -1,6 +1,6 @@
 import { LoginPage } from "./components/LoginPage/LoginPage";
 import { Home } from "./components/Home";
-import { RegistrationPage } from "./components/RegistrationPage/RegistrationPage";
+import  RegistrationPage  from "./components/RegistrationPage/RegistrationPage";
 import { VotingMenu } from "./components/VotingMenu/VotingMenu";
 import { VoteBallot } from "./components/VoteBallot/VoteBallot";
 import { SuccesfulVote } from "./components/SuccesfulVote/SuccesfulVote";

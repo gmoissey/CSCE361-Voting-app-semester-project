@@ -14,16 +14,16 @@ namespace VotingApp.Migrations
                 name: "Person",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Party = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Age = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.ID);
+                    table.PrimaryKey("PK_Person", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,23 +32,23 @@ namespace VotingApp.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Candidate1ID = table.Column<int>(type: "int", nullable: true),
-                    Candidate2ID = table.Column<int>(type: "int", nullable: true),
+                    Candidate1Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Candidate2Username = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Election", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Election_Person_Candidate1ID",
-                        column: x => x.Candidate1ID,
+                        name: "FK_Election_Person_Candidate1Username",
+                        column: x => x.Candidate1Username,
                         principalTable: "Person",
-                        principalColumn: "ID");
+                        principalColumn: "Username");
                     table.ForeignKey(
-                        name: "FK_Election_Person_Candidate2ID",
-                        column: x => x.Candidate2ID,
+                        name: "FK_Election_Person_Candidate2Username",
+                        column: x => x.Candidate2Username,
                         principalTable: "Person",
-                        principalColumn: "ID");
+                        principalColumn: "Username");
                 });
 
             migrationBuilder.CreateTable(
@@ -58,7 +58,7 @@ namespace VotingApp.Migrations
                     VoteID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ElectionId = table.Column<int>(type: "int", nullable: true),
-                    VoterID = table.Column<int>(type: "int", nullable: true),
+                    VoterUsername = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Vote = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -70,21 +70,21 @@ namespace VotingApp.Migrations
                         principalTable: "Election",
                         principalColumn: "ID");
                     table.ForeignKey(
-                        name: "FK_Votes_Person_VoterID",
-                        column: x => x.VoterID,
+                        name: "FK_Votes_Person_VoterUsername",
+                        column: x => x.VoterUsername,
                         principalTable: "Person",
-                        principalColumn: "ID");
+                        principalColumn: "Username");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Election_Candidate1ID",
+                name: "IX_Election_Candidate1Username",
                 table: "Election",
-                column: "Candidate1ID");
+                column: "Candidate1Username");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Election_Candidate2ID",
+                name: "IX_Election_Candidate2Username",
                 table: "Election",
-                column: "Candidate2ID");
+                column: "Candidate2Username");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_ElectionId",
@@ -92,9 +92,9 @@ namespace VotingApp.Migrations
                 column: "ElectionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Votes_VoterID",
+                name: "IX_Votes_VoterUsername",
                 table: "Votes",
-                column: "VoterID");
+                column: "VoterUsername");
         }
 
         /// <inheritdoc />
