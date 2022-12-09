@@ -12,6 +12,13 @@ export class NavBar extends Component {
             isAuthenticated: sessionStorage.getItem('authenticated') === 'true'
          };
     }
+
+    logout() { 
+        sessionStorage.setItem('authenticated', false);
+        sessionStorage.setItem('username', '');
+        this.setState({isAuthenticated: false});
+    }
+
     render() { 
         return (
             <Navbar className="navbar-light navbar-expand-md py-3 shadow-sm">
@@ -47,7 +54,7 @@ export class NavBar extends Component {
                         this.state.isAuthenticated ? 
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item">
-                                <a className="nav-link" href="/logout">Logout</a>
+                                <a className="nav-link" onClick={this.logout} href="/">Logout</a>
                             </li>
                         </ul>
                         :
