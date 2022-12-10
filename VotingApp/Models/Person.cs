@@ -10,11 +10,11 @@ public class Person
     [Key]
     [Required]
     public string? Username { get; set; }
-
+    
     private string? _passwordHash;
 
     [Required]
-    [JsonIgnore]
+    // [JsonIgnore]
     public string PasswordHash
     {
         get

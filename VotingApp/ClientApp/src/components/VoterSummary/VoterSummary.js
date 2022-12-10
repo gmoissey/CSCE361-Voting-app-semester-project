@@ -3,8 +3,9 @@ import './VoterSummary.scss';
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Table from 'react-bootstrap/Table';
+import withRouter from '../router/withRouter';
 
-export class VoterSummary extends Component {
+class VoterSummary extends Component {
     state = {  } 
     render() { 
         return (
@@ -43,3 +44,5 @@ export class VoterSummary extends Component {
         );
     }
 }
+
+export default withRouter(VoterSummary);

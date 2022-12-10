@@ -1,6 +1,7 @@
 import "./VotingMenu.scss";
 
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Container from 'react-bootstrap/Container'
 import Table from 'react-bootstrap/Table';
 import VoterAPI from '../../API/VoterAPI';
@@ -47,11 +48,13 @@ export class VotingMenu extends Component {
                     <tbody>
                         {
                             this.state.elections.map((election, index) => {
-                                if(new Date(election.endDate) > new Date()) return;
+                                if(new Date(election.endDate).getTime() < new Date().getTime()) return;
                                 return (
                                     <tr>
                                         <td>{election.id}</td>
-                                        <td>{election.title}</td>
+                                        <td>
+                                            <Link to={`/voteballot/${election.id}`}>{election.title}</Link>
+                                        </td>
                                         <td>{election.candidate1["firstName"] + " " + election.candidate1["lastName"]}</td>
                                         <td>{election.candidate2["firstName"] + " " + election.candidate2["lastName"]}</td>
                                         <td>{election.endDate}</td>
@@ -79,7 +82,7 @@ export class VotingMenu extends Component {
                     <tbody>
                         {
                             this.state.elections.map((election, index) => {
-                                if(new Date(election.endDate) <= new Date()) return;
+                                if(new Date(election.endDate) >= new Date().getTime()) return;
                                 return (
                                     <tr>
                                         <td>{election.id}</td>
