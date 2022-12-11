@@ -35,7 +35,7 @@ class SuccesfulVote extends Component {
                 <div className="gap-3">
                     <Button variant="primary m" size="md" onClick={this.handleBallotButtonPress}>
                         View Ballot
-                    </Button>
+                    </Button>  
                     <Button variant="secondary" size="md" onClick={this.handleResultsButtonPress}>
                         View Results
                     </Button>

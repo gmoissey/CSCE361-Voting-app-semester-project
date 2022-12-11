@@ -86,7 +86,9 @@ export class VotingMenu extends Component {
                                 return (
                                     <tr>
                                         <td>{election.id}</td>
-                                        <td>{election.title}</td>
+                                        <td>
+                                            <Link to={`/ElectionResults/${election.id}`}>{election.title}</Link>
+                                        </td>
                                         <td>{election.candidate1["firstName"] + " " + election.candidate1["lastName"]}</td>
                                         <td>{election.candidate2["firstName"] + " " + election.candidate2["lastName"]}</td>
                                         <td>{election.endDate}</td>
