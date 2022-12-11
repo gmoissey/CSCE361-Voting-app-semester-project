@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:44480",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "c:\\Users\\Cameron Wood\\Documents\\GitHub\\CSCE361-Voting-app-semester-project\\VotingApp\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}
