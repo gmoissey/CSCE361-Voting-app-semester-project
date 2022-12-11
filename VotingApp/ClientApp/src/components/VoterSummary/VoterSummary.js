@@ -4,18 +4,58 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Table from 'react-bootstrap/Table';
 import withRouter from '../router/withRouter';
+import VoterAPI from '../../API/VoterAPI';
 
 class VoterSummary extends Component {
-    state = {  } 
+    constructor(props) {
+        super(props);
+        this.state = {
+            votes: [],
+            voters: [],
+            election: {},
+            count: 0
+        };
+        this.loadVotes = this.loadVotes.bind(this);
+        this.loadVoters = this.loadVoters.bind(this);
+        this.loadElection = this.loadElection.bind(this);
+    };
+
+    componentDidMount() {
+        this.loadVotes();
+        this.loadVoters();
+        this.loadElection(this.props.params.id);
+    }
+
+    loadVotes() {
+        VoterAPI.getVotes().then((response) => {
+            this.setState({votes: response});
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    loadVoters() {
+        VoterAPI.getPerson().then((response) => {
+            this.setState({voters: response});
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    loadElection(electionId) {
+        VoterAPI.getElection(electionId).then((response) => {
+            this.setState({election: response});
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     render() { 
         return (
             <Container>
                 <h1>
-                    2022 Elections Summary:
+                    {this.state.election.title} Summary:
                 </h1>
-                <h3>
-                    Total Votes: 2
-                </h3>
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -26,18 +66,29 @@ class VoterSummary extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <td>1</td>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>Yes</td>
-                        </tr>
-                        <tr>
-                        <td>2</td>
-                        <td>Some</td>
-                        <td>Dude</td>
-                        <td>Yes</td>
-                        </tr>
+                        {
+                            this.state.voters.map((voter, index) => {
+                                if (sessionStorage.getItem(`${voter.username}hasVoted${this.props.params.id}`)) {
+                                    return (
+                                        <tr>
+                                            <td>{voter.username}</td>
+                                            <td>{voter.firstName}</td>
+                                            <td>{voter.lastName}</td>
+                                            <td>Yes</td>
+                                        </tr>
+                                    )
+                                } else {
+                                    return (
+                                        <tr>
+                                            <td>{voter.username}</td>
+                                            <td>{voter.firstName}</td>
+                                            <td>{voter.lastName}</td>
+                                            <td>No</td>
+                                        </tr>
+                                    )
+                                }
+                            })
+                        }
                     </tbody>
                 </Table>
             </Container>

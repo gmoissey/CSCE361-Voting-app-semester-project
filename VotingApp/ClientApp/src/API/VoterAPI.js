@@ -139,5 +139,24 @@ export default class VoterAPI {
             throw error;
         }
     }
+
+
+    // Gets all registered people in the database
+    static async getPerson() {
+        if(this.validateLoginState() === false) return Promise.reject('Not authenticated');
+        let params = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        try {
+            const response = await fetch(`${baseUrl}Person`, params);
+            return await response.json();
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
