@@ -6,13 +6,24 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 
 export class NavBar extends Component {
-    state = {  };
-    
+    constructor(props) {
+        super(props);
+        this.state = { 
+            isAuthenticated: sessionStorage.getItem('authenticated') === 'true'
+         };
+    }
+
+    logout() { 
+        sessionStorage.setItem('authenticated', false);
+        sessionStorage.setItem('username', '');
+        this.setState({isAuthenticated: false});
+    }
+
     render() { 
         return (
             <Navbar className="navbar-light navbar-expand-md py-3 shadow-sm">
             <Container>
-                <a className="navbar-brand d-flex align-items-center" href="#">
+                <a className="navbar-brand d-flex align-items-center" href="/">
                     <span className="d-flex justify-content-center align-items-center bs-icon-sm bs-icon-rounded bs-icon-primary me-2 bs-icon">
                         <svg
                         className="bi bi-arrow-up-right-square"
@@ -39,16 +50,27 @@ export class NavBar extends Component {
                     <span className="navbar-toggler-icon" />
                 </button>
                 <div id="navcol-2" className="collapse navbar-collapse">
-                <ul className="navbar-nav ms-auto">
-                    <li className="nav-item">
-                    <a className="nav-link active" href="#">
-                        Register
-                    </a>
-                    </li>
-                </ul>
-                <a className="btn btn-primary ms-md-2" role="button" href="#">
-                    Login
-                </a>
+                    {
+                        this.state.isAuthenticated ? 
+                        <ul className="navbar-nav ms-auto">
+                            <li className="nav-item">
+                                <a className="nav-link" onClick={this.logout} href="/">Logout</a>
+                            </li>
+                        </ul>
+                        :
+                        <ul className="navbar-nav ms-auto">
+                            <li className="nav-item">
+                            <a className="nav-link active" href="/register">
+                                Register
+                            </a>
+                            </li>
+                        
+                            <a className="btn btn-primary ms-md-2" role="button" href="/login">
+                                Login
+                            </a>
+                        </ul>
+
+                    }
                 </div>
             </Container>
             </Navbar>
