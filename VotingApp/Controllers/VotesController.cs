@@ -50,6 +50,24 @@ namespace VotingApp.Controllers
             return votes;
         }
 
+        // GET: api/Votes/5
+        [HttpPost("query")]
+        public async Task<ActionResult<Votes>> GetVoteByUserAndElection(Votes vote)
+        {
+          if (_context.Votes == null)
+          {
+              return NotFound();
+          }
+            var votes = await _context.Votes.Where(v => v.VoterUsername == vote.VoterUsername && v.ElectionId == vote.ElectionId).FirstOrDefaultAsync();
+
+            if (votes == null)
+            {
+                return NotFound();
+            }
+
+            return votes;
+        }
+
         // PUT: api/Votes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

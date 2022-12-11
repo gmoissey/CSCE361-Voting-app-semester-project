@@ -158,5 +158,23 @@ export default class VoterAPI {
             throw error;
         }
     }
+
+    static async findVote(vote) {
+        if(this.validateLoginState() === false) return Promise.reject('Not authenticated');
+        let params = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vote)
+        };
+
+        try {
+            const response = await fetch(`${baseUrl}Votes/query`, params);
+            return await response.json();
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 

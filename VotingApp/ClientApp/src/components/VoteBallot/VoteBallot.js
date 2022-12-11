@@ -12,6 +12,7 @@ class VoteBallot extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            disabled: false,
             vote: {
                 electionId: -1,
                 voterUsername: sessionStorage.getItem('username'),
@@ -30,11 +31,27 @@ class VoteBallot extends Component {
         this.handleSubmit = this.handleVoteSubmit.bind(this);
         this.handleFormChange = this.handleFormChange.bind(this);
         this.loadElection = this.loadElection.bind(this);
+        this.loadVoteBallot = this.loadVoteBallot.bind(this);
     }
 
     componentDidMount() {
         this.loadElection(this.props.params.id);
         this.state.vote.electionId = this.props.params.id;
+        this.loadVoteBallot();
+    }
+
+    loadVoteBallot() {
+        let vote = {
+            VoterUsername: sessionStorage.getItem('username'),
+            ElectionId: this.props.params.id
+        }
+        VoterAPI.findVote(vote).then((response) => {
+            if(response.status == 404) return;
+            this.setState({
+                disabled: true,
+                vote: response
+            });
+        });
     }
 
     loadElection(electionId) {
@@ -109,8 +126,11 @@ class VoteBallot extends Component {
                                     id={`default-radio`}
                                     name="vote"
                                     value="1"
+                                    {
+                                        ...this.state.vote.vote === 1 ? {checked: true} : null
+                                    }
                                     onChange={this.handleFormChange}
-                                    disabled={sessionStorage.getItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`)}
+                                    disabled={this.state.disabled}
                                 />
                             </td>
                             <td>{this.state.selectedElection.candidate1['firstName']} {this.state.selectedElection.candidate1['lastName']}</td>
@@ -125,8 +145,11 @@ class VoteBallot extends Component {
                                     id={`default-radio`}
                                     name="vote"
                                     value="2"
+                                    {
+                                        ...this.state.vote.vote === 2 ? {checked: true} : null
+                                    }
                                     onChange={this.handleFormChange}
-                                    disabled={sessionStorage.getItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`)}
+                                    disabled={this.state.disabled}
                                 />
                             </td>
                             <td>{this.state.selectedElection.candidate2['firstName']} {this.state.selectedElection.candidate2['lastName']}</td>

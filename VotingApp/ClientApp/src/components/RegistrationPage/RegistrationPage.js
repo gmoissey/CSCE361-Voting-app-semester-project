@@ -23,7 +23,8 @@ class RegistrationPage extends Component {
                 LastName: '',
                 Username: '',
                 PasswordHash: '',
-                DOB: ''
+                DOB: '',
+                Party: ''
             },
             errors: [],
             loading: false,
@@ -106,6 +107,11 @@ class RegistrationPage extends Component {
                             <Form.Group className="mb-3" controlId="formGridAddress1">
                                 <Form.Label>Username</Form.Label>
                                 <Form.Control type="username" name="Username" onChange={this.handleFormChange} placeholder="username" />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formGridAddress1">
+                                <Form.Label>Affiliated Party</Form.Label>
+                                <Form.Control type="text" name="Party" onChange={this.handleFormChange} placeholder="party" />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGridAddress2">
