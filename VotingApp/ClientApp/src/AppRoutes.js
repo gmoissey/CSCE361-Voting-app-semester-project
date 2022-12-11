@@ -37,7 +37,7 @@ const AppRoutes = [
     element: <ElectionResults />
   },
   {
-    path: '/votersummary',
+    path: '/votersummary/:id',
     element: <VoterSummary />
   }
 ];

@@ -11,12 +11,12 @@ class SuccesfulVote extends Component {
         this.state = {
 
         };
-        this.handleResultsButtonPress = this.handleResultsButtonPress.bind(this);
+        this.handleSummaryButtonPress = this.handleSummaryButtonPress.bind(this);
         this.handleBallotButtonPress = this.handleBallotButtonPress.bind(this);
     }
 
-    handleResultsButtonPress(event) {
-        this.props.navigate(`/ElectionResults/${this.props.params.id}`);
+    handleSummaryButtonPress(event) {
+        this.props.navigate(`/VoterSummary/${this.props.params.id}`);
     }
 
     handleBallotButtonPress(event) {
@@ -36,8 +36,8 @@ class SuccesfulVote extends Component {
                     <Button variant="primary m" size="md" onClick={this.handleBallotButtonPress}>
                         View Ballot
                     </Button>  
-                    <Button variant="secondary" size="md" onClick={this.handleResultsButtonPress}>
-                        View Results
+                    <Button variant="secondary" size="md" onClick={this.handleSummaryButtonPress}>
+                        View Summary
                     </Button>
                 </div>
             </Container>
