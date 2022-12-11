@@ -3,8 +3,8 @@ import { Home } from "./components/Home";
 import  RegistrationPage  from "./components/RegistrationPage/RegistrationPage";
 import { VotingMenu } from "./components/VotingMenu/VotingMenu";
 import VoteBallot from "./components/VoteBallot/VoteBallot";
-import { SuccesfulVote } from "./components/SuccesfulVote/SuccesfulVote";
-import { ElectionResults } from "./components/ElectionResults/ElectionResults";
+import SuccesfulVote from "./components/SuccesfulVote/SuccesfulVote";
+import ElectionResults from "./components/ElectionResults/ElectionResults";
 import VoterSummary from "./components/VoterSummary/VoterSummary";
 
 const AppRoutes = [
@@ -29,11 +29,11 @@ const AppRoutes = [
     element: <VoteBallot />
   },
   {
-    path: '/succesfulvote',
+    path: '/succesfulvote/:id',
     element: <SuccesfulVote />
   },
   {
-    path: '/electionresutls',
+    path: '/electionresults/:id',
     element: <ElectionResults />
   },
   {

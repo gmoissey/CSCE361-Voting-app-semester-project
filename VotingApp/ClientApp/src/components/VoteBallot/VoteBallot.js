@@ -6,9 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import VoterAPI from "../../API/VoterAPI";
-import VoterSummary from "../VoterSummary/VoterSummary";
 import withRouter from "../router/withRouter";
-import { useNavigate } from "react-router-dom";
 
 class VoteBallot extends Component {
     constructor(props) {
@@ -20,11 +18,13 @@ class VoteBallot extends Component {
                 vote: -1
             },
             selectedElection: {
+                id: -1,
                 candidate1: {},
                 candidate2: {}
             },
             errors: [],
             loading: false,
+            hasVoted: sessionStorage.getItem(`${sessionStorage.getItem('username')}HasVoted${this.props.params.id}`),
             isAuthenticated: sessionStorage.getItem('authenticated')
         };
         this.handleSubmit = this.handleVoteSubmit.bind(this);
@@ -49,6 +49,11 @@ class VoteBallot extends Component {
         event.preventDefault();
         this.setState({errors: []});
 
+        if(sessionStorage.getItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`)) {
+            this.setState({errors: ['You have already voted!']});
+            return;
+        }
+
         if (this.state.vote.vote === -1) {
             this.setState({errors: ['You must have a valid vote in order to submit.']});
             return;
@@ -66,7 +71,8 @@ class VoteBallot extends Component {
             this.setState({errors: ["An error occurred while voting."]});
         }).finally(() => {
             this.setState({loading: false});
-            this.props.navigate("/VoterSummary");
+            sessionStorage.setItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`, true);
+            this.props.navigate(`/succesfulvote/${this.props.params.id}`);
         });
     }
 
@@ -104,6 +110,7 @@ class VoteBallot extends Component {
                                     name="vote"
                                     value="1"
                                     onChange={this.handleFormChange}
+                                    disabled={sessionStorage.getItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`)}
                                 />
                             </td>
                             <td>{this.state.selectedElection.candidate1['firstName']} {this.state.selectedElection.candidate1['lastName']}</td>
@@ -119,6 +126,7 @@ class VoteBallot extends Component {
                                     name="vote"
                                     value="2"
                                     onChange={this.handleFormChange}
+                                    disabled={sessionStorage.getItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`)}
                                 />
                             </td>
                             <td>{this.state.selectedElection.candidate2['firstName']} {this.state.selectedElection.candidate2['lastName']}</td>
@@ -127,7 +135,7 @@ class VoteBallot extends Component {
                         }
                     </tbody>
                     </Table>
-                    <Button variant="primary" type="submit" value="Submit">Submit</Button>
+                    <Button variant="primary" type="submit" value="Submit" hidden={sessionStorage.getItem(`${sessionStorage.getItem('username')}hasVoted${this.props.params.id}`)}>Submit</Button>
                 </Form>
             </Container>
         );

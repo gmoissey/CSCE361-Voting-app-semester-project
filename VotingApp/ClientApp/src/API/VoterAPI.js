@@ -83,6 +83,45 @@ export default class VoterAPI {
         }
     }
 
+
+    // Gets a single vote by ID
+    static async getVote(voteId)  {
+        if(this.validateLoginState() === false) return Promise.reject('Not authenticated');
+        let params = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        try {
+            const response = await fetch(`${baseUrl}Votes/${voteId}`, params);
+            return await response.json();
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+    // Gets all votes
+    static async getVotes() {
+        if(this.validateLoginState() === false) return Promise.reject('Not authenticated');
+        let params = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        try {
+            const response = await fetch(`${baseUrl}Votes`, params);
+            return await response.json();
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
     // Gets a single election by ID
     static async getElection(electionId)  {
         if(this.validateLoginState() === false) return Promise.reject('Not authenticated');

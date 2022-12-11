@@ -3,9 +3,26 @@ import Button from 'react-bootstrap/Button';
 
 import React, { Component } from "react";
 import Container from 'react-bootstrap/Container';
+import withRouter from "../router/withRouter";
 
-export class SuccesfulVote extends Component {
-    state = {  } 
+class SuccesfulVote extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        };
+        this.handleResultsButtonPress = this.handleResultsButtonPress.bind(this);
+        this.handleBallotButtonPress = this.handleBallotButtonPress.bind(this);
+    }
+
+    handleResultsButtonPress(event) {
+        this.props.navigate(`/ElectionResults/${this.props.params.id}`);
+    }
+
+    handleBallotButtonPress(event) {
+        this.props.navigate(`/VoteBallot/${this.props.params.id}`);
+    }
+
     render() { 
         return (
             <Container>
@@ -16,10 +33,10 @@ export class SuccesfulVote extends Component {
                     Thanks for voting!
                 </h3>
                 <div className="gap-3">
-                    <Button variant="primary m" size="md">
+                    <Button variant="primary m" size="md" onClick={this.handleBallotButtonPress}>
                         View Ballot
                     </Button>
-                    <Button variant="secondary" size="md">
+                    <Button variant="secondary" size="md" onClick={this.handleResultsButtonPress}>
                         View Results
                     </Button>
                 </div>
@@ -27,3 +44,5 @@ export class SuccesfulVote extends Component {
         );
     }
 }
+
+export default withRouter(SuccesfulVote);

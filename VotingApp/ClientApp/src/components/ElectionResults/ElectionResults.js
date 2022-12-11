@@ -7,43 +7,87 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import { Check2Circle } from 'react-bootstrap-icons'
+import VoterAPI from "../../API/VoterAPI";
+import withRouter from "../router/withRouter";
 
-export class ElectionResults extends Component {
-    state = {  } 
+class ElectionResults extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            votes: [],
+            election: {
+                candidate1: {},
+                candidate2: {}
+            },
+            votes1: 0,
+            votes2: 0,
+            totalVotes: 0
+        };
+        this.loadResults = this.loadResults.bind(this);
+        this.calculateVotes = this.calculateVotes.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadResults(this.props.params.id);
+    }
+
+    loadResults(electionId) {
+        VoterAPI.getElection(electionId).then((response) => {
+            this.setState({election: response});
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        VoterAPI.getVotes().then((response) => {
+            this.setState({votes: response});
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
+    calculateVotes() {
+        this.state.votes.map((vote, index) => {
+            if (vote.electionId == this.props.params.id) {
+                if (vote.vote == 1) {
+                    this.state.votes1++;
+                } else if (vote.vote == 2) {
+                    console.log(vote);
+                    this.state.votes2++;
+                }
+                this.state.totalVotes++;
+            }
+        })
+    }
+
     render() { 
+        if (this.state.votes1 == 0) {
+            this.calculateVotes();
+        }
         return (
             <Container>
                 <h1>
-                    2022 Elections:
+                    {this.state.election.title} Results:
                 </h1>
                 <br/>
                 <div>
                     <Row>
                         <Col className="left-candidate">
-                            <h3>Candidate 1</h3>
-                            <h3>40%</h3>
+                            <h3>{this.state.election.candidate1['firstName']} {this.state.election.candidate1['lastName']}</h3>
                         </Col>
                         <Col className="right-candidate">
-                            <h3>
-                                <Badge bg="success" className="candidate-label-badge">
-                                    <Check2Circle className="badge-icon"/>
-                                    Win
-                                </Badge>
-                                Candidate 2
-                            </h3>
-                            <h3>60%</h3>
+                            <h3>{this.state.election.candidate2['firstName']} {this.state.election.candidate2['lastName']}</h3>
                         </Col>
                     </Row>
                     <ProgressBar>
-                        <ProgressBar striped variant="success" now={40} key={1} />
-                        <ProgressBar striped variant="info" now={60} key={2} />
+                        <ProgressBar striped variant="success" now={(this.state.votes1 / this.state.totalVotes) * 100} key={1} />
+                        <ProgressBar striped variant="info" now={(this.state.votes2 / this.state.totalVotes) * 100} key={2} />
                     </ProgressBar>
                     <Row>
                         <Col className="left-candidate">
-                            40,000 votes
+                            {this.state.votes1} votes
                         </Col>
                         <Col className="right-candidate">
-                            60,000 votes
+                        {this.state.votes2} votes
                         </Col>
                     </Row>
                 </div>
@@ -51,3 +95,5 @@ export class ElectionResults extends Component {
         );
     }
 }
+
+export default withRouter(ElectionResults);
