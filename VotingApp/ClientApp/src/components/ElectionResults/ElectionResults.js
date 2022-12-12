@@ -91,6 +91,8 @@ class ElectionResults extends Component {
                         </Col>
                     </Row>
                 </div>
+
+                <a href={`/votersummary/${this.props.params.id}`}>Voting Symmary</a>
             </Container>
         );
     }
