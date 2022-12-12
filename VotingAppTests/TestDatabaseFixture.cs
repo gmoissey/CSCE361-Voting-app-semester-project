@@ -25,7 +25,7 @@ namespace VotingAppTests
 
                         context.AddRange(
                             new Election { ID = 1, Candidate1Username = "user1.1", Candidate2Username = "user1.2", Title = "Election1", EndDate = new System.DateTime(2021, 12, 31) },
-                            new Election { ID = 1, Candidate1Username = "user2.1", Candidate2Username = "user2.1", Title = "Election2", EndDate = new System.DateTime(2022, 12, 31) });
+                            new Election { ID = 2, Candidate1Username = "user2.1", Candidate2Username = "user2.1", Title = "Election2", EndDate = new System.DateTime(2022, 12, 31) });
                         context.SaveChanges();
                     }
 
@@ -37,7 +37,7 @@ namespace VotingAppTests
         public VotingAppDbContext CreateContext()
             => new VotingAppDbContext(
                 new DbContextOptionsBuilder<VotingAppDbContext>()
-                    .UseSqlServer(ConnectionString)
+                    .UseInMemoryDatabase(databaseName: "TestDatabase")
                     .Options);
     }
 }
