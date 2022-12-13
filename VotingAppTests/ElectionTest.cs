@@ -42,4 +42,31 @@ public class ElectionTest : IClassFixture<TestDatabaseFixture>
         var model = Assert.IsAssignableFrom<Election>(viewResult.Value);
         Assert.NotNull(model);
     }
+
+    [Fact]
+    public async Task PutElectionShouldNotBadRequest()
+    {
+        //Arrange
+        var controller = new ElectionController(Fixture.CreateContext());
+
+        //Act
+        var result = await controller.PutElection(1, new Election { ID = 1, Candidate1Username = "user1.1", Candidate2Username = "user1.2", Title = "Election1", EndDate = new System.DateTime(2021, 12, 31) });
+
+        //Assert
+        Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async Task DeleteElectionShouldNotBadRequest()
+    {
+        //Arrange
+        var controller = new ElectionController(Fixture.CreateContext());
+        await controller.PostElection(new Election { ID = 3, Candidate1Username = "user1", Candidate2Username = "user2", Title = "Election3", EndDate = new System.DateTime(2023, 12, 31) });
+
+        //Act
+        var result = await controller.DeleteElection(3);
+
+        //Assert
+        Assert.IsType<NoContentResult>(result);
+    }
 }
